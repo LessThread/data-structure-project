@@ -15,14 +15,14 @@
             "program": "${workspaceRoot}/node_modules/ts-node/dist/bin-cwd.js",
 
             "args": [
-
-                "${relativeFile}"
+                "ts-src\\main.ts"
+                //"${relativeFile}"
 
             ],
 
             "cwd": "${workspaceRoot}",
 
-            "protocol": "inspector"
+            //"protocol": "inspector"
 
         }
 

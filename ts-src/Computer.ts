@@ -33,25 +33,65 @@ function GreedyMod(max:number,price:number[],ans:number[],weight:number[],index:
 }
 
 //动态规划
-function DynamicMod(max:number,price:number[],ans:number[],weight:number[],index:number):number[]
+function DynamicMod(max:number,$price:number[],ans:number[],$weight:number[],index:number):number[]
 {
+    //JS的数组拷贝
+    let price =  Array.from($price);
+    price.unshift(0);
+    let weight = Array.from($weight);
+    weight.unshift(0);
 
-    //此段复用封装,需要排序吗？
-    let priority = new Map();
-    let res:number[] = [];
-    for(let i=0;i<price.length;i++){res[i]=0;}
-    let capacity = 0;
-    let num = price.length;
+    let dp:number[][]=[];
 
-    for(let i=0;i<num;i++)
+    for(let i=0;i<price.length;i++)
     {
-        priority.set(i,price[i]/weight[i]);
+        let arr = new Array;
+        dp.push(arr);
+
+        for(let j=0; j<max;j++)
+        {
+            arr.push(new Array);
+            dp[i][j]=0;
+        }
+    }
+    for(let i=1;i<price.length;i++){
+        for(let j=1;j<max;j++){
+            if(j<=weight[i]){
+                dp[i][j]=dp[i-1][j];
+            }
+            else{
+                dp[i][j]=Math.max(dp[i-1][j],dp[i-1][j-weight[i]]+price[i]);
+            }
+        }
     }
 
-    let map_sort_arr = Array.from(priority);
-    map_sort_arr.sort((a,b)=>{return b[1]-a[1]});
+    //生成了dp表
+    console.log(dp);
+    console.log(max,price.length)
 
+    let res:number[] = [];
+    for(let i=0;i<price.length;i++){
+        res.push(0);
+    }
 
+    let find = (i:number,j:number)=>{
+        if(i>=0){
+            console.log(i,j)
+            if(j==3)return;
+            if(dp[i][j]===dp[i-1][j]){
+                res[i]=0;
+                find(i-1,j)
+            }
+            else if(j-weight[i]>=0&&dp[i][j]==dp[i-1][j-weight[i]]+price[i]){
+                res[i]=1;
+                find(i-1,j-weight[i])
+            }
+        }
+    }
+
+    find(price.length-1,max-1)
+    res.shift();
+    console.log(res)
 
     return[1];
 }
