@@ -1,3 +1,4 @@
+//贪心算法
 function GreedyMod(max:number,price:number[],ans:number[],weight:number[],index:number):number[]
 {
 
@@ -31,6 +32,7 @@ function GreedyMod(max:number,price:number[],ans:number[],weight:number[],index:
     return [1];
 }
 
+//动态规划
 function DynamicMod(max:number,price:number[],ans:number[],weight:number[],index:number):number[]
 {
 
