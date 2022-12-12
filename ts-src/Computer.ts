@@ -1,4 +1,4 @@
-//贪心算法
+//贪心算法(r)
 function GreedyMod(max:number,price:number[],ans:number[],weight:number[],index:number):number[]
 {
 
@@ -13,6 +13,7 @@ function GreedyMod(max:number,price:number[],ans:number[],weight:number[],index:
         priority.set(i,price[i]/weight[i]);
     }
 
+    //对价值排序
     let map_sort_arr = Array.from(priority);
     map_sort_arr.sort((a,b)=>{return b[1]-a[1]});
     
@@ -27,36 +28,39 @@ function GreedyMod(max:number,price:number[],ans:number[],weight:number[],index:
     }
 
     //输出还没做完，考虑是否封装格式化
-    console.log("File "+index+" res: ")
+    console.log("File "+index+" GreedyMod res: ")
     console.log(res)
+    console.log(weight[0]+weight[2]);
     return [1];
 }
+//......
 
-//动态规划
+//动态规划(r)
 function DynamicMod(max:number,$price:number[],ans:number[],$weight:number[],index:number):number[]
 {
-    //JS的数组拷贝
+    //数组拷贝,max为容量
     let price =  Array.from($price);
     price.unshift(0);
     let weight = Array.from($weight);
     weight.unshift(0);
-
     let dp:number[][]=[];
 
+    //dp表置零
     for(let i=0;i<price.length;i++)
     {
         let arr = new Array;
         dp.push(arr);
-
-        for(let j=0; j<max;j++)
+        for(let j=0; j<max+1;j++)
         {
             arr.push(new Array);
             dp[i][j]=0;
         }
     }
+
+    //生成了dp表
     for(let i=1;i<price.length;i++){
-        for(let j=1;j<max;j++){
-            if(j<=weight[i]){
+        for(let j=1;j<max+1;j++){
+            if(j<weight[i]){
                 dp[i][j]=dp[i-1][j];
             }
             else{
@@ -64,20 +68,16 @@ function DynamicMod(max:number,$price:number[],ans:number[],$weight:number[],ind
             }
         }
     }
-
-    //生成了dp表
     console.log(dp);
-    console.log(max,price.length)
 
+    //寻找最优解（此处是将res归零）
     let res:number[] = [];
     for(let i=0;i<price.length;i++){
         res.push(0);
     }
 
     let find = (i:number,j:number)=>{
-        if(i>=0){
-            console.log(i,j)
-            if(j==3)return;
+        if(i>0){
             if(dp[i][j]===dp[i-1][j]){
                 res[i]=0;
                 find(i-1,j)
@@ -89,13 +89,15 @@ function DynamicMod(max:number,$price:number[],ans:number[],$weight:number[],ind
         }
     }
 
-    find(price.length-1,max-1)
+    find(price.length-1,max)
     res.shift();
+    console.log("File "+ index+ " DynamicMod res:")
     console.log(res)
 
+    debugger;
     return[1];
 }
-
+//......
 
 class Node{
     data:number;

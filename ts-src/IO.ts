@@ -23,19 +23,19 @@ function getW(path:string):number[]
 function getCPSW(path:string){
     let c:number = -1; 
     (async()=>{c=getC(path+'/c.txt')})()
-        .then(()=>console.log("c:"+c+"\n"));
+        //.then(()=>console.log("c:"+c+"\n"));
 
     let p :number[] = [];
     (async()=>{p=getP(path+'/p.txt')})()
-        .then(()=>console.log("p:"+p+"\n"));
+        //.then(()=>console.log("p:"+p+"\n"));
 
     let s :number[] = [];
     (async()=>{s=getS(path+'/s.txt')})()
-        .then(()=>console.log("s:"+s+"\n"));
+        //.then(()=>console.log("s:"+s+"\n"));
 
     let w :number[] = [];
     (async()=>{w=getW(path+'/w.txt')})()
-        .then(()=>console.log("w:"+w+"\n"));
+        //.then(()=>console.log("w:"+w+"\n"));
 
     return{c,p,s,w};
 }
