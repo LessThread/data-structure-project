@@ -1,4 +1,4 @@
-//贪心算法(r)
+//心算法(r)
 function GreedyMod(max:number,price:number[],ans:number[],weight:number[],index:number):number[]
 {
     //生成价值数组
