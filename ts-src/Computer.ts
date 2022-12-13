@@ -1,7 +1,7 @@
 //贪心算法(r)
 function GreedyMod(max:number,price:number[],ans:number[],weight:number[],index:number):number[]
 {
-
+    //生成价值数组
     let priority = new Map();
     let res:number[] = [];
     for(let i=0;i<price.length;i++){res[i]=0;}
@@ -13,10 +13,11 @@ function GreedyMod(max:number,price:number[],ans:number[],weight:number[],index:
         priority.set(i,price[i]/weight[i]);
     }
 
-    //对价值排序
+    //对价值数组排序
     let map_sort_arr = Array.from(priority);
     map_sort_arr.sort((a,b)=>{return b[1]-a[1]});
     
+    //贪心比较
     for(let i=0;i<map_sort_arr.length;i++)
     {
         let add = weight[map_sort_arr[i][0]];
@@ -99,31 +100,61 @@ function DynamicMod(max:number,$price:number[],ans:number[],$weight:number[],ind
 }
 //......
 
+
 class Node{
-    data:number;
-    left:Node;
-    right:Node;
-    count:number;
-    constructor(data:number, left:Node, right:Node)
+    node_weight:number[];
+    node_value:number[];
+    node_key:number[];
+    node_id:number;
+    constructor(node_weight:number[],node_value:number[],node_id:number)
     {
-        this.data = data;
-        this.left = left;
-        this.right = right;
-        this.count = 1;
+        this.node_id = node_id;
+        this.node_value = Array.from(node_value) ;
+        this.node_weight = Array.from(node_weight);
+    }
+    
+    setKey(node_key:number[]):void{
+        this.node_key = Array.from(node_key);
     }
 }
 
-function generateBinaryTree(price:number[],weight:number[])
-{
-    
-}
-
+//分支限界（TS中采用迭代器在队列中剪枝的方式）
+//数据结构：拷贝所有物品的信息，只改变取与不取
 function BranchGaugeMod(max:number,price:number[],ans:number[],weight:number[],index:number):number[]
 {
-    let best_result = 0;//记录目前最优值
+    //这里不采用按单位价值排序的数组，直接搜索剪枝
+    let len=price.length;
+    let NodeStack:Node[] = [];
+    NodeStack.push(new Node(weight,price,0));
+    NodeStack.push(new Node(weight,price,0));
+    let count = 0;//count是用来决定这是第几个物品加不加入。
+
+    //剪枝函数
+    function prune(node){
+        //立即计算容量并比较
+        let c=0;
+        for(let i=0;i<len;i++)
+        {
+            if(node.node_key[i]===1)
+            {
+                node
+            }
+        }
+    }
+    
+    while(count<max)
+    {
+        let temp_price = 
+        count++;
+    }
+
+    //构建剪枝代码
+
+
     return [1];
 }
 
+//回溯法
 function Backtracking(max:number,price:number[],ans:number[],weight:number[],index:number):number[]
 {
     let capacity = 0;
