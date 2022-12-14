@@ -31,7 +31,6 @@ function GreedyMod(max:number,price:number[],ans:number[],weight:number[],index:
     //输出还没做完，考虑是否封装格式化
     console.log("File "+index+" GreedyMod res: ")
     console.log(res)
-    console.log(weight[0]+weight[2]);
     return [1];
 }
 //......
@@ -95,24 +94,30 @@ function DynamicMod(max:number,$price:number[],ans:number[],$weight:number[],ind
     console.log("File "+ index+ " DynamicMod res:")
     console.log(res)
 
-    debugger;
     return[1];
 }
 //......
 
 
 class Node{
-    node_weight:number[];
-    node_value:number[];
     node_key:number[];
     node_id:number;
-    constructor(node_weight:number[],node_value:number[],node_id:number)
-    {
-        this.node_id = node_id;
-        this.node_value = Array.from(node_value) ;
-        this.node_weight = Array.from(node_weight);
+    constructor(idORnode:any){
+        if(typeof idORnode === 'number'){
+            this.node_id = idORnode;
+            this.node_key = [];
+        }
+        else{//通过首参数的类型判断实现构造函数重载，进而实现拷贝构造函数
+            this.node_key = Array.from(idORnode.node_key);
+            this.node_id = idORnode.node_id;
+        }
+        
     }
     
+    addKey(node_key_add:number){
+        this.node_key.push(node_key_add);
+    }
+
     setKey(node_key:number[]):void{
         this.node_key = Array.from(node_key);
     }
@@ -125,32 +130,83 @@ function BranchGaugeMod(max:number,price:number[],ans:number[],weight:number[],i
     //这里不采用按单位价值排序的数组，直接搜索剪枝
     let len=price.length;
     let NodeStack:Node[] = [];
-    NodeStack.push(new Node(weight,price,0));
-    NodeStack.push(new Node(weight,price,0));
+    let NodeStack_2:Node[] = [];
+    NodeStack.push(new Node(0));
     let count = 0;//count是用来决定这是第几个物品加不加入。
 
     //剪枝函数
-    function prune(node){
+    function prune(node:Node){
         //立即计算容量并比较
-        let c=0;
-        for(let i=0;i<len;i++)
-        {
-            if(node.node_key[i]===1)
-            {
-                node
+        let c=0;let v=0;
+        for(let i=0;i<len;i++){
+            if(node.node_key[i]===1){
+                c+=weight[i];
+                v+=price[i];
             }
+        }
+        //标价为已剪枝，暂时用于debug,后期可在每次遍历时除去
+        if(c>max){
+            node.node_id=-1;
+            return -1;
+        }
+        else{
+            return v;
         }
     }
     
-    while(count<max)
-    {
-        let temp_price = 
+
+    let best = 0;
+    let bestIndex = -1;
+
+    while(count<len){
+        let NodeStackLen = NodeStack.length
+
+        //构造放与不放
+        for(let i=0;i<NodeStackLen;i++)
+        {
+            let AddItem = new Node(NodeStack[i]);
+            let NotAddItem = new Node(NodeStack[i]);
+            AddItem.addKey(1);
+            NotAddItem.addKey(0);
+            NodeStack.push(AddItem);
+            NodeStack.push(NotAddItem);
+        }
+
+        //剪枝,undefine还是应该删掉
+        for(let index in NodeStack){
+            let value = prune(NodeStack[index])
+            if(value===-1){
+                //delete NodeStack[index];
+            }
+            else if(NodeStack[index].node_key.length<=count){
+                
+            }
+            else {
+                NodeStack_2.push(NodeStack[index]);
+            }
+        }
+
+        NodeStack=[];
+        NodeStack = Array.from(NodeStack_2);
+        NodeStack_2=[];
+
+        
+        console.log("count: "+count);
+        console.log(NodeStack);
+        
         count++;
+        debugger;
+    }
+    
+    for(let index in NodeStack){
+        if(prune(NodeStack[index])>best){
+            best=prune(NodeStack[index]);
+            bestIndex = Number(index);
+        }
     }
 
-    //构建剪枝代码
-
-
+    console.log("File "+ index+ " BranchGaugeMod res:")
+    console.log(NodeStack[bestIndex].node_key);
     return [1];
 }
 
@@ -208,8 +264,8 @@ function Backtracking(max:number,price:number[],ans:number[],weight:number[],ind
 }
 
 export {
-    GreedyMod,
-    DynamicMod,
-    Backtracking,
-    BranchGaugeMod,
+    GreedyMod,//贪心
+    DynamicMod,//动态
+    Backtracking,//回溯
+    BranchGaugeMod,//分支限界  
 };
