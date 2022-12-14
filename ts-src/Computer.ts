@@ -191,11 +191,11 @@ function BranchGaugeMod(max:number,price:number[],ans:number[],weight:number[],i
         NodeStack_2=[];
 
         
-        console.log("count: "+count);
-        console.log(NodeStack);
+        //console.log("count: "+count);
+        //console.log(NodeStack);
         
         count++;
-        debugger;
+        //debugger;
     }
     
     for(let index in NodeStack){
@@ -210,56 +210,88 @@ function BranchGaugeMod(max:number,price:number[],ans:number[],weight:number[],i
     return [1];
 }
 
+
+
+
 //回溯法
 function Backtracking(max:number,price:number[],ans:number[],weight:number[],index:number):number[]
 {
-    let capacity = 0;
-    let priority = 0;
-
-    let best_value = 0;
-    let best_arr:boolean[] = [];
-    let tree:boolean[] = [];
-
-    for(let i=0;i<price.length;i++)
-    {
-        tree.push(false);
+    const LEN = price.length;
+    class b_node{
+        node_key:number[];
+        constructor(nodeORitem:b_node|number){
+            if(typeof nodeORitem === 'number'){
+                this.node_key = [];
+            }
+            else{
+                this.node_key = Array.from(nodeORitem.node_key);
+            }
+        }
+        addKey(item:number):void{
+            this.node_key.push(item);
+        }
     }
     
-    let now=0;
-
-    for(;;)
-    {
-        //搜索触底，记录并回溯
-        if(now===price.length)
-        {
-            //如果优于现存最优解，则取而代之
-            if(best_value>priority)
-            {
-                best_arr = tree;
-                best_value = priority;
-            }
-
-            else
-            {
-                
+    function check(node:b_node):number{
+        let c=0,v=0;
+        for(let i=0;i<LEN;i++){
+            if(node.node_key[i]===1){
+                c+=weight[i];
+                v+=price[i];
             }
         }
-
-        if(tree[now]==false)
-        {
-            if((capacity+weight[now])<max)
-            {
-                capacity+=weight[now];
-                priority+=price[now];
-                tree[now]=!tree[now];
-                now+=1;
-            }
+        if(c>max){
+            return -1;
         }
+        else{
+            return v;
+        }
+    };
+
+    let BNodeStack:b_node[] = [];//节点栈
+    //let ResNodeStack:b_node[] = [];
+    let bestBNode:any = null;
+    let bestB:number = -1;
+    BNodeStack.push(new b_node(0));
+
+    //循环写法实现无指针DFS
+    while(1){
+        if(BNodeStack.length === 0){break;}
+        let temp_top:any = BNodeStack.pop();
+        if(temp_top.node_key.length===LEN){
+            //将已满足的节点加入检查组中
+            ((temp_top:b_node)=>{
+                let res = check(temp_top)
+                //console.log("check: "+res)
+                //console.log(temp_top);
+                if(res===-1){
+                    return;
+                }
+                else{
+                    if(res>bestB){
+                        bestBNode = temp_top;
+                        bestB = res;
+                    }
+                }
+            })(temp_top);
+            continue;
+        }
+
+        let AddItem = new b_node(temp_top);
+        let NotAddItem = new b_node(temp_top);
+
+        AddItem.addKey(1);
+        NotAddItem.addKey(0);
+
+        BNodeStack.push(AddItem);
+        BNodeStack.push(NotAddItem);
+
+        //console.log(bestBNode);
+        // debugger;
     }
 
-
-
-
+    console.log("File "+ index+ " Backtracking res:")
+    console.log(bestBNode.node_key);
     return [1];
 }
 
