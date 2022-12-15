@@ -42,12 +42,11 @@ function getCPSW(path:string){
 
 function writeAns(index:string,ans:any){
     for(let i=0;i<ans.length;i++){
-        debugger;
         let content = ans[i];
         console.log(content);
         content = content.toString();
         console.log(content);
-        fs.writeFile("./ans/ans_"+index,content+'\n',{'flag':'a'},(err)=>{console.log(err)})
+        fs.writeFile("./experiments/ans_"+index,content+'\n',{'flag':'w'},(err)=>{console.log(err)})
     }
 }
 
