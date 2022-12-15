@@ -40,10 +40,22 @@ function getCPSW(path:string){
     return{c,p,s,w};
 }
 
+function writeAns(index:string,ans:any){
+    for(let i=0;i<ans.length;i++){
+        debugger;
+        let content = ans[i];
+        console.log(content);
+        content = content.toString();
+        console.log(content);
+        fs.writeFile("./ans/ans_"+index,content+'\n',{'flag':'a'},(err)=>{console.log(err)})
+    }
+}
+
 export {
     getC,
     getP,
     getS,
     getW,
-    getCPSW
+    getCPSW,
+    writeAns
 };

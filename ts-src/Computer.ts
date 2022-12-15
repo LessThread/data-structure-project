@@ -31,7 +31,7 @@ function GreedyMod(max:number,price:number[],ans:number[],weight:number[],index:
     //输出还没做完，考虑是否封装格式化
     console.log("File "+index+" GreedyMod res: ")
     console.log(res)
-    return [1];
+    return res;
 }
 //......
 
@@ -94,7 +94,7 @@ function DynamicMod(max:number,$price:number[],ans:number[],$weight:number[],ind
     console.log("File "+ index+ " DynamicMod res:")
     console.log(res)
 
-    return[1];
+    return res;
 }
 //......
 
@@ -207,7 +207,7 @@ function BranchGaugeMod(max:number,price:number[],ans:number[],weight:number[],i
 
     console.log("File "+ index+ " BranchGaugeMod res:")
     console.log(NodeStack[bestIndex].node_key);
-    return [1];
+    return NodeStack[bestIndex].node_key;
 }
 
 
@@ -292,7 +292,7 @@ function Backtracking(max:number,price:number[],ans:number[],weight:number[],ind
 
     console.log("File "+ index+ " Backtracking res:")
     console.log(bestBNode.node_key);
-    return [1];
+    return bestBNode.node_key;
 }
 
 export {
