@@ -1,6 +1,8 @@
 # 代码文件说明
 ## 文件位置
-0. Git如有需要请拉取[远程仓库](https://github.com/sandwools/project)
+0. Git如有需要请拉取[远程仓库](https://github.com/sandwools/project)  
+[![github](https://img.shields.io/github/languages/top/sandwools/project)](https://github.com/sandwools/project)
+
 1. TypeScript原始文件:`ts-src`内
 2. 编译后的JavaScript文件:`js-src`内
 
