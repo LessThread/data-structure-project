@@ -14,6 +14,7 @@ for(let i=0;i<3;i++)
     let ans1 = GreedyMod(c,p,s,w,i);
     console.log("time: "+(()=>{let t1= new Date().getTime(); return t1-t0;})())
     console.log("-------");
+    ;
     let ans2 = DynamicMod(c,p,s,w,i);
     console.log("time: "+(()=>{let t2= new Date().getTime(); return t2-t0;})())
     console.log("-------");

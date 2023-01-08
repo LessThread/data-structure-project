@@ -1,22 +1,30 @@
 {
 
-    "compilerOptions": {
+    "version": "0.2.0",
 
-        "module": "commonjs",
+    "configurations": [
 
-        "target": "es5",
+        {
 
-        "noImplicitAny": true,
+            "name": "Current TS File",
 
-        "outDir": "./dist",
+            "type": "node",
 
-        "sourceMap": true
+            "request": "launch",
 
-    },
+            "program": "${workspaceRoot}/node_modules/ts-node/dist/bin-cwd.js",
 
-    "include": [
+            "args": [
+                "ts-src\\main.ts"
+                //"${relativeFile}"
 
-        "src/**/*"
+            ],
+
+            "cwd": "${workspaceRoot}",
+
+            //"protocol": "inspector"
+
+        }
 
     ]
 
