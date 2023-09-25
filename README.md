@@ -1,4 +1,4 @@
-# 代码文件说明
+# 天津大学数据结构课程大作业《使用TS解决01背包问题》
 ## 文件位置
 0. Git如有需要请拉取[远程仓库](https://github.com/sandwools/project)
 1. TypeScript原始文件:`ts-src`内
